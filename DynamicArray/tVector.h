@@ -5,6 +5,7 @@ class tVector
 {
 	const static size_t GROWTH_FACTOR = 10;
 
+	
 	T *arr;
 	size_t arrSize;
 	size_t arrCapacity;
@@ -34,10 +35,11 @@ public:
 template<typename T>
 inline tVector<T>::tVector()
 {
-	t *temp = new T[10];
+	T *temp = new T[10];
 	arr = new T[10];
 	arrSize = 0;
-	arrCapacity = 10
+	arrCapacity = 10;
+	
 }
 
 template<typename T>
@@ -49,8 +51,31 @@ inline T * tVector<T>::data()
 template<typename T>
 inline void tVector<T>::reserve(size_t newCapacity)
 {
-	if (arrCapacity < newCapacity)
+	T *temp;
+	if (arrCapacity =< newCapacity)
 	{
-
+		arrCapacity += GROWTH_FACTOR;
+		temp = new T[arrCapacity];
+		for (int i = 0; i < arrsize; i++)
+		{
+			temp[i] = arr[i];
+		}
+		
+		delete[] arr;
+		arr = temp;
 	}
+}
+
+template<typename T>
+inline void tVector<T>::push_back(const T & value)
+{
+	arr[arrSize] = value;
+	arrSize++;
+	reserve(arrSize);
+}
+
+template<typename T>
+inline void tVector<T>::pop_back()
+{
+
 }
