@@ -19,7 +19,6 @@ int main()
 	int count = sizeof(cover) / sizeof(bookInfo);
 
 	std::fstream file;
-
 	file.open("library.dat", std::ios_base::in | std::ios_base::binary);
 	if (file.is_open())
 	{	
@@ -29,16 +28,17 @@ int main()
 	}
 	else
 	{
-		file.open("library.txt", std::ios_base::in);
-		if (!file.is_open())
+		std::fstream textfile;
+		
+		textfile.open("library.txt", std::ios::in);
+		if (!textfile.is_open())
 		{
 			std::cout << "file not found" << std::endl;
 			return 0;
 		}
 		else
 		{
-			std::fstream textfile;
-			textfile.open("library.txt", std::ios::in);
+			
 			std::string tmp;
 			
 			for (int i = 0; i < count; ++i)
@@ -65,7 +65,7 @@ int main()
 				
 			}
 			textfile.open("library.dat", std::ios_base::out | std::ios_base::binary);
-			file.write((char*)&cover, sizeof(bookInfo) * 3);
+			textfile.write((char*)&cover, sizeof(bookInfo) * 3);
 			textfile.close();
 		}
 	}
