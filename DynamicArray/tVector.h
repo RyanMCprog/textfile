@@ -18,6 +18,11 @@ public:
 		delete[] arr;
 	}
 
+	//Vector Copy
+	tVector(const tVector &vec);
+
+	tVector<T>& operator=(const tVector<T> &vec);
+
 	T *data();
 
 	void reserve(size_t newCapacity);
@@ -27,9 +32,17 @@ public:
 
 	T &at(size_t index);
 
+	//subscript operator
+	T& operator[] (size_t index);
+
 	size_t size() const;
 	size_t capacity() const;
 
+	//utility Functions
+	bool empty() const;
+	void resize(size_t newSize);
+	void shrink_to_fit();
+	void clear();
 };
 
 template<typename T>
@@ -43,6 +56,20 @@ inline tVector<T>::tVector()
 }
 
 template<typename T>
+inline tVector<T>::tVector(const tVector &vec)
+{
+	arr = vec.arr;
+	arrSize = vec.arrSize;
+	arrCapacity = vec.arrCapacity;
+}
+
+template<typename T>
+inline tVector<T> & tVector<T>::operator=(const tVector<T> &vec)
+{
+	return *this;
+}
+
+template<typename T>
 inline T * tVector<T>::data()
 {
 	return arr;
@@ -52,11 +79,11 @@ template<typename T>
 inline void tVector<T>::reserve(size_t newCapacity)
 {
 	T *temp;
-	if (arrCapacity =< newCapacity)
+	if (arrCapacity <= newCapacity)
 	{
 		arrCapacity += GROWTH_FACTOR;
 		temp = new T[arrCapacity];
-		for (int i = 0; i < arrsize; i++)
+		for (int i = 0; i < arrSize; i++)
 		{
 			temp[i] = arr[i];
 		}
@@ -77,5 +104,80 @@ inline void tVector<T>::push_back(const T & value)
 template<typename T>
 inline void tVector<T>::pop_back()
 {
+	if (arrSize > 0)
+		arrSize--;
 
+	arr[arrSize] = 0;
+}
+
+template<typename T>
+inline T & tVector<T>::at(size_t index)
+{
+	return arr[index];
+}
+
+template<typename T>
+inline T & tVector<T>::operator[](size_t index)
+{
+	return *arr[index];
+}
+
+template<typename T>
+inline size_t tVector<T>::size() const
+{
+	return arrSize;
+}
+
+template<typename T>
+inline size_t tVector<T>::capacity() const
+{
+	return arrCapacity;
+}
+
+template<typename T>
+inline bool tVector<T>::empty() const
+{
+	if (arrSize == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+template<typename T>
+inline void tVector<T>::resize(size_t newSize)
+{
+	if (newSize < arrSize)
+	{
+		arrSize = newSize;
+	}
+	else
+	{
+		for (i = arrSize; i < newSize; i++)
+		{
+			arr[arrSize] = 0;
+			arrSize++;
+			reserve(arrSize);
+		}
+	}
+}
+
+template<typename T>
+inline void tVector<T>::shrink_to_fit()
+{
+	arrCapacity = arrSize;
+}
+
+template<typename T>
+inline void tVector<T>::clear()
+{
+	T *temp;
+	arrCapacity = 10;
+	temp = new T[arrCapacity];
+	arrsize = 0;
+	delete[] arr;
+	arr = temp;
 }
