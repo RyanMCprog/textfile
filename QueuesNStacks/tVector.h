@@ -162,7 +162,7 @@ inline void tVector<T>::resize(size_t newSize)
 	}
 	else
 	{
-		for (int i = arrSize; i < newSize; i++)
+		for (i = arrSize; i < newSize; i++)
 		{
 			arr[arrSize] = 0;
 			arrSize++;
