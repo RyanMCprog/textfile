@@ -37,21 +37,32 @@ inline tQueue<T>::tQueue(size_t count, const T & value)
 template<typename T>
 inline void tQueue<T>::push(const T & value)
 {
+	vec.arr[vec.arrSize] = value;
+	vec.arrSize++;
+	vec.reserve(vec.arrSize);
 }
 
 template<typename T>
 inline void tQueue<T>::pop()
 {
+	for (int i = 0; i < vec.arrSize; i++)
+	{
+		if (i + 1 != vec.arrSize)
+		{
+			vec.arr[i] = vec.arr[i + 1];
+		}
+	}
+	vec.arrSize--;
 }
 
 template<typename T>
 inline T & tQueue<T>::front()
 {
-	// TODO: insert return statement here
+	return vec.arr[0];
 }
 
 template<typename T>
 inline size_t tQueue<T>::size() const
 {
-	return size_t();
+	return vec.arrSize;
 }
