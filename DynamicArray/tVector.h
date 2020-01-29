@@ -43,6 +43,10 @@ public:
 	void resize(size_t newSize);
 	void shrink_to_fit();
 	void clear();
+
+	void printArray();
+
+	void bubbleSort();
 };
 
 template<typename T>
@@ -183,7 +187,41 @@ inline void tVector<T>::clear()
 	T *temp;
 	arrCapacity = 10;
 	temp = new T[arrCapacity];
-	arrsize = 0;
+	arrSize = 0;
 	delete[] arr;
 	arr = temp;
 }
+
+template<typename T>
+inline void tVector<T>::printArray()
+{
+	for (int i = 0; i < arrSize; i++)
+	{
+		std::cout << arr[i] << std::endl;
+	}
+}
+
+template<typename T>
+inline void tVector<T>::bubbleSort()
+{
+	int temp = 0;
+	bool swapped;
+	for (int i = 0; i < arrSize - 1; i++)
+	{
+		swapped = false;
+		for (int j = 0; j < arrSize - i - 1; j++)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+				temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+				swapped = true;
+			}
+		}
+		if (swapped == false)
+			break;
+	}
+}
+
+
